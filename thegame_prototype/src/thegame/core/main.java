@@ -25,15 +25,27 @@ import thegame.adt.Stack;
 import thegame.adt.Stack.Direction;
 
 public class main {
-	public static Image i = null ;
+	public static BufferedImage i = null ;
 	public static BufferedImage iAll = null ;
 	
+	/*
+BufferedImage before = getBufferedImage(encoded);
+int w = before.getWidth();
+int h = before.getHeight();
+BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+AffineTransform at = new AffineTransform();
+at.scale(2.0, 2.0);
+AffineTransformOp scaleOp = 
+   new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+after = scaleOp.filter(before, after);
+	 */
 	public static BufferedImage scale(BufferedImage sbi, int imageType, int dWidth, int dHeight, double fWidth, double fHeight) {
 	    BufferedImage dbi = null;
 	    if(sbi != null) {
 	        dbi = new BufferedImage(dWidth, dHeight, imageType);
 	        Graphics2D g = dbi.createGraphics();
 	        AffineTransform at = AffineTransform.getScaleInstance(fWidth, fHeight);
+	        
 	        g.drawRenderedImage(sbi, at);
 	    }
 	    return dbi;
@@ -97,19 +109,20 @@ public class main {
 			g.setColor(Color.white);
 			g.setFont(font);
 			
-			int width = 350;
-			int height = 600;
+			int width = 3500;
+			int height = 6000;
 			
 			g.drawImage(scale(iAll, BufferedImage.TYPE_INT_RGB, width, height, (double)width/iAll.getWidth(),  (double)height/iAll.getHeight()), 25,25,null);
 			
 			
 			
-//				for ( int idx = 0 ; idx < 4 ; idx ++)
-//				{
-//					g.drawImage(i, 20 + (idx*i.getWidth(null)),100,null);
-//					g.drawString("00", 20 + (idx*i.getWidth(null))
-//							, 200 + i.getHeight(null)/2);
-//				}
+				for ( int idx = 0 ; idx < 4 ; idx ++)
+				{
+					;
+					g.drawImage(scale(i,BufferedImage.TYPE_INT_RGB,175,220,0.5,0.5), 400 + (idx*i.getWidth(null)),100,null);
+					g.drawString("00", 400 + (idx*i.getWidth(null))
+							, 200 + i.getHeight(null)/2);
+				}
 				
 				
 			}
