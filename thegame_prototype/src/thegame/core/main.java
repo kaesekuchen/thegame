@@ -3,7 +3,10 @@ package thegame.core;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +26,19 @@ import thegame.adt.Stack.Direction;
 
 public class main {
 	public static Image i = null ;
+	public static BufferedImage iAll = null ;
+	
+	public static BufferedImage scale(BufferedImage sbi, int imageType, int dWidth, int dHeight, double fWidth, double fHeight) {
+	    BufferedImage dbi = null;
+	    if(sbi != null) {
+	        dbi = new BufferedImage(dWidth, dHeight, imageType);
+	        Graphics2D g = dbi.createGraphics();
+	        AffineTransform at = AffineTransform.getScaleInstance(fWidth, fHeight);
+	        g.drawRenderedImage(sbi, at);
+	    }
+	    return dbi;
+	}
+	
 	public static void main (String[] args)
 	{
 		CardDeck cd = new CardDeck();
@@ -54,8 +70,10 @@ public class main {
 		frame.setSize(800, 600);
 		File fMatte = new File("projektwoche_thegame.png");
 		File f= new File("the-game.jpg");
+		
 		try {
 			 i = ImageIO.read(f);
+			 iAll = ImageIO.read(fMatte);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -78,12 +96,20 @@ public class main {
 				
 			g.setColor(Color.white);
 			g.setFont(font);
-				for ( int idx = 0 ; idx < 4 ; idx ++)
-				{
-					g.drawImage(i, 20 + (idx*i.getWidth(null)),100,null);
-					g.drawString("00", 20 + (idx*i.getWidth(null))
-							, 200 + i.getHeight(null)/2);
-				}
+			
+			int width = 350;
+			int height = 600;
+			
+			g.drawImage(scale(iAll, BufferedImage.TYPE_INT_RGB, width, height, (double)width/iAll.getWidth(),  (double)height/iAll.getHeight()), 25,25,null);
+			
+			
+			
+//				for ( int idx = 0 ; idx < 4 ; idx ++)
+//				{
+//					g.drawImage(i, 20 + (idx*i.getWidth(null)),100,null);
+//					g.drawString("00", 20 + (idx*i.getWidth(null))
+//							, 200 + i.getHeight(null)/2);
+//				}
 				
 				
 			}
